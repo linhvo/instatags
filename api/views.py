@@ -47,12 +47,8 @@ def on_callback(request):
         data = json.loads(response.content)
         InstagramUser.objects.get_or_create(access_toke=data['access_token'],
                                             username=data['user']['username'],
-                                            bio=data['user']['bio'],
-                                            website=data['user']['website'],
-                                            profile_picture=data['user']['profile_picture'],
-                                            full_name=data['user']['full_name'],
                                             instagram_id=data['user']['id'])
 
     except Exception as e:
         Response(status=HTTP_400_BAD_REQUEST, data="Error: %s" % e)
-    return Response(data)
+    return Response(data['user'])
