@@ -9,5 +9,5 @@ class InstagramUser(models.Model):
     website = models.URLField(blank=True, null=True)
     profile_picture = models.URLField(blank=True, null=True)
     full_name = models.CharField(max_length=255, blank=True, null=True)
-    instagram_id = models.IntegerField()
+    instagram_id = models.BigIntegerField()
 
