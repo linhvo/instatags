@@ -42,16 +42,15 @@ def on_callback(request):
             'grant_type': 'authorization_code',
             'redirect_uri': CONFIG['redirect_uri']
         }
+        print(CONFIG)
 
         response = requests.post(url, data=data)
         data = json.loads(response.content)
         print(data)
         InstagramUser.objects.create(access_toke=data['access_token'],
-                                            username=data['user']['username'],
-                                            instagram_id=data['user']['id'])
+                                     username=data['user']['username'],
+                                     instagram_id=int(data['user']['id']))
     except Exception as e:
         Response(status=HTTP_400_BAD_REQUEST, data="Error: %s" % e)
     return Response(data['user'])
 
-#
-# @api_view(['GET'])
