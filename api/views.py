@@ -2,12 +2,15 @@ import json
 import os
 
 import requests
+from django.core.exceptions import ObjectDoesNotExist
 from instagram import client
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
+from rest_framework.views import APIView
 
-from api.models import InstagramUser
+from api.models import InstagramUser, Tag, Media
+from api.serializers import MediaSerializer
 
 CONFIG = {
     'client_id': os.environ.get('CLIENT_ID'),
@@ -53,4 +56,21 @@ def on_callback(request):
     except Exception as e:
         Response(status=HTTP_400_BAD_REQUEST, data="Error: %s" % e)
     return Response(data['user'])
+
+
+class MediaList(APIView):
+    """
+    List all snippets, or create a new snippet.
+    """
+    def get(self, request, format=None):
+        tag_name = request.GET.get('tag')
+        try:
+            tag = Tag.objects.get(tag_name=tag_name)
+        except ObjectDoesNotExist as ex:
+            return Response(status=HTTP_400_BAD_REQUEST, data="Error: %s" % ex)
+
+        media = Media.objects.filter(tag=tag)
+        serializer = MediaSerializer(media, many=True)
+        return Response(serializer.data)
+
 

@@ -12,6 +12,8 @@ class InstagramUser(models.Model):
     instagram_id = models.BigIntegerField()
     created_date = models.DateTimeField(auto_now=True)
 
+    def __unicode__(self):
+        return self.username
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length=255, unique=True)

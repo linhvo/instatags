@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^home/', views.home),
     url(r'^oauth_callback/', views.on_callback),
+    url(r'^media/$', views.MediaList.as_view()),
 ]
