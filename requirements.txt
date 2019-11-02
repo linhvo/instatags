@@ -7,5 +7,5 @@ requests==2.18.4
 psycopg2-binary==2.7.4
 psycopg2==2.7.4
 ipython==5.1.0
-Pillow==5.1.0
+Pillow==6.2.0
 python-resize-image==1.1.11
